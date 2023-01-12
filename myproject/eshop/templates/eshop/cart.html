@@ -16,7 +16,7 @@
                     <th><h5>Предметы: <strong> {{order.get_cart_items}} </strong></h5></th>
                     <th><h5>Сумма:<strong> {{order.get_cart_total|floatformat:2}} ₽</strong></h5></th>
                     <th>
-                        <a style="float:right; margin:5px;" class="btn btn-primary" href="{% url 'eshop:checkout' %}"> Проверка</a>
+                        <a style="float:right; margin:5px;" class="btn btn-primary" href="{% url 'eshop:checkout' %}"> Проверка </a>
                     </th>
                 </tr>
             </table>
@@ -31,7 +31,7 @@
                 <div style="flex:2"><strong>Предмет</strong></div>
                 <div style="flex:1"><strong>Цена</strong></div>
                 <div style="flex:1"><strong>Количество</strong></div>
-                <div style="flex:1"><strong>Сумма</strong></div>
+                <div style="flex:1"><strong>Сумма </strong></div>
             </div>
             <!--is a for loop which displays customer products-->
             {% for item in items %}
