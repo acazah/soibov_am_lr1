@@ -1,0 +1,19 @@
+{% extends 'eshop/eshop.html' %}
+
+{% block title %}Зарегистрироваться{% endblock%}
+{% block linkbar %}
+<a href="/eshop/login/" class="btn btn-warning">Войти</a>
+
+{% endblock%}
+
+{% block content %}
+<h1>Зарегистрироваться</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+
+    <br>
+    <button type="submit">Зарегистрироваться</button>
+</form>
+{% endblock %}

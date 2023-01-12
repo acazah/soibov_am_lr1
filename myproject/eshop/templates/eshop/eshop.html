@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="../../../static/css/main.css"/>
+	<title>Fors</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		.fa {
+			padding: 20px;
+			font-size: 30px;
+			width: 50px;
+			text-align: center;
+			text-decoration: none;
+			margin: 5px 2px;
+			border-radius: 50%;
+		}
+
+		.fa:hover {
+			opacity: 0.7;
+		}
+
+		.fa-facebook {
+			background: #4b2d92;
+			color: white;
+		}
+
+		.fa-twitter {
+			background: #55ACEE;
+			color: white;
+		}
+		.fa-instagram {
+			background: #125688;
+			color: white;
+			}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="{% url 'eshop:eshop' %}">
+		<img src="{% static  'images/logпo.png' %}" alt="Logo" style="width:60px;">
+		</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				<!--Men filters and buttons-->
+				<ul class="nav nav-pills">
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Мужское						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a href="/eshop/mens_tshirt_list_base_page/" class="dropdown-item">Футболки</a><hr>
+							<a href="/eshop/mens_hoodies_list_base_page/" class="dropdown-item">Худи</a><hr>
+							<a href="/eshop/mens_jean_list_base_page/" class="dropdown-item">Джинсы</a><hr>
+							<a href="/eshop/mens_coat_list_base_page/" class="dropdown-item">Пальто</a>
+						</div>
+					</div>
+				</ul>
+				<!--Women filters and buttons-->
+				<ul class="nav nav-pills">
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Женское
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a href="/eshop/women_tshirt_list_base_page/" class="dropdown-item">Футболки</a><hr>
+							<a href="/eshop/women_hoodies_list_base_page/" class="dropdown-item">Худи</a><hr>
+							<a href="/eshop/women_jean_list_base_page/" class="dropdown-item">Джинсы</a><hr>
+							<a href="/eshop/women_coat_list_base_page/" class="dropdown-item">Пальто</a>
+						</div>
+					</div>
+				</ul>
+			</div>
+			<!--SignUp-LogIn buttons-->
+			<div class="form-inline my-2 my-lg-0">
+						<span id="linkbar">
+							<a href="/eshop/customer_registration/" class="btn btn-info">Зарегистрироваться</a>
+							<a href="/eshop/login/" class="btn btn-light">Войти</a>
+						</span>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<br>
+		{% block content %}
+		<div class="row">
+		<!--Product list-->
+			{% for product in  products %}
+		<!--Product details-->
+			<div class="col-lg-4">
+				<img class="thumbnail" src="{{product.imageURL}}">
+				<div class="box-element product">
+
+					<h6><strong>Бренд:{{product.brand}}</strong></h6>
+					<h6><strong>Размер:{{product.size}}</strong></h6>
+					<h6><strong>Цвет:{{product.color}}</strong></h6>
+					<h6><strong>Цена: {{product.price}} ₽</strong></h6>
+					<hr>
+					<a class="btn btn-outline-success" href="/eshop/{{ product.id }}">Перейти</a>
+
+				</div>
+			</div>
+			{% endfor %}
+			{% endblock content %}
+
+        </div>
+			<br><br>
+
+<!--pagination navbar-->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li class="page-item disabled">
+
+						{% if products.has_previous %}
+					<li class="page-item"><a class="page-link" href="?page=1">raquo&Первый</a></li>
+					<li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Перейти</a>
+					</li>
+					{% endif %}
+
+					{% for i in nums %}
+					<li class="page-item"><a class="page-link"
+							href="?page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+
+					{% endfor %}
+
+					{% if products.has_next %}
+					<li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Далее</a></li>
+					<li class="page-item"><a class="page-link"
+							href="?page={{ products.paginator.num_pages }}">Последний&raquo</a></li>
+					{% endif %}
+					</li>
+				</ul>
+			</nav>
+
+			<div class="bg-white">
+				<div class="container py-5">
+				  <div class="row py-4">
+
+					<div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+					  <h6 class="text-uppercase font-weight-bold mb-4">Fors</h6>
+					  <ul class="list-unstyled mb-0">
+						<li class="mb-2"><a href="{% url 'eshop:eshop' %}" class="text-muted">Вся продукция</a></li>
+						  <li class="mb-2"><a href="{% url 'eshop:eshop' %}" class="text-muted">Адресса магазинов</a></li>
+						<li class="mb-2"><a href="mailto:Fors@fors.com" class="text-muted">Связаться по почте</a></li>
+					  </ul>
+
+					</div>
+					<div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+					  <h6 class="text-uppercase font-weight-bold mb-4">Ип</h6>
+					  <ul class="list-unstyled mb-0">
+						<li class="mb-2"><a href="/" target="_blank" class="text-muted">Правовые сведение об ИП Сохибов Ф.О. </a></li>
+						<li class="mb-2"><a href="/" target="_blank" class="text-muted">Сфера деятельности</a></li>
+						<li class="mb-2"><a href="/" target="_blank" class="text-muted">Сведение из ЕГРИП</a></li>
+					  </ul>
+
+					</div>
+					  <div class="col-lg-3 col-md-6 mb-lg-0">
+					  <h6 class="text-uppercase font-weight-bold mb-4">О нас</h6>
+					  <p class="text-muted mb-4">Наши магазины работают с 2000 года. В настоящее время они занимают лидирующие позиции на рынке, сохраняя высокие темпы роста внутри страны.</p>
+
+					</div>
+                      <div class="col-lg-3 col-md-6 mb-lg-4">
+					  <h6 class="text-uppercase font-weight-bold mb-4">Мы в соц сетях</h6>
+                        <li href="mel:83432967981" class="text-muted">Tel: 83432967981</li>
+						<li class="list-inline-item"><a href="https://Vk.ru/ali_soibov/" class="fa fa-facebook" target="_blank" ></i></a></li>
+						<li class="list-inline-item"><a href="https://www.instagram.com/ali_soibov" class="fa fa-instagram" target="_blank"></i></a></li>
+						<li class="list-inline-item"><a href="https://telegramm.com/ali_soibov/?lang=el" class="fa fa-twitter" target="_blank"></a></i></li>
+					</div>
+				  </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2117.851851440877!2d60.011364516260585!3d57.939522681194234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43ea6356634519ef%3A0x7c91c3c8a2f82cb8!2z0KTQvtGA0YE!5e0!3m2!1sru!2sru!4v1669234533840!5m2!1sru!2sru" width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4316.189763014478!2d60.10395908006652!3d57.2550364739267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43c191514700850b%3A0x718fdb1f8289d266!2z0KTQntCg0KEg0L7QtNC10LbQtNCwINC-0LHRg9Cy0Yw!5e0!3m2!1sru!2sru!4v1669234657460!5m2!1sru!2sru" width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+
+			<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+				integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+				crossorigin="anonymous"></script>
+
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+				integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+				crossorigin="anonymous"></script>
+
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+				integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+				crossorigin="anonymous"></script>
+
+			<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+
+			</div>
+	</div>
+</body>
+
+
+
+</html>
